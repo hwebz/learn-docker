@@ -1,0 +1,42 @@
+version: "3"
+
+
+services:
+  go-api:
+    build:
+      context: ./go-api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=sqlite-db
+      - REDIS_HOST=redis
+    depends_on:
+      - sqlite-db
+      - redis
+
+  sqlite-db:
+    image: nouchka/sqlite3:latest
+    volumes:
+      - ./data:/data
+    
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - go-api
+      - next-fe
+
+  redis:
+    image: redis:7.2.5
+
+  next-fe:
+    build:
+      context: ./next-fe
+      dockerfile: Dockerfile
+    environment:
+      - API_HOST=http://go-api:8080
+      

@@ -1,0 +1,20 @@
+# Go API Dockerfile
+FROM golang:2.12.3
+
+# Install air - Hot reloading package for Go
+RUN go install github.com/cosmtrek/air@latest
+
+# Set the working directory is /app inside docker container
+WORKDIR /app
+
+# Copy depencies config files to container's /app folder
+COPY go.mod ./
+COPY go.sum ./
+# Run to install all required dependencies
+RUN go mod download
+
+# Copy all go files to active working directory inside container
+COPY *.go ./
+
+# Use air to run the Go API with live reloading
+CMD ["air"]

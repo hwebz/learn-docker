@@ -1,0 +1,16 @@
+FROM node:20.14.0
+
+WORKDIR /app
+
+COPY package.json ./
+COPY package-lock.json ./
+
+RUN npm install
+
+COPY . .
+
+# Start the React.js development server with live reloading
+# CMD ["npm", "start"]
+
+# Start the Next.js development server with live reloading
+CMD ["npm", "run", "dev"]
