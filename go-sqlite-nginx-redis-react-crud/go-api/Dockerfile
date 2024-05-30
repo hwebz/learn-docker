@@ -1,5 +1,5 @@
 # Go API Dockerfile
-FROM golang:2.12.3
+FROM golang:1.22.3
 
 # Set the working directory is /app inside docker container
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY go.sum ./
 RUN go mod download
 
 # Copy all go files to active working directory inside container
-COPY *.go ./
+COPY . .
 
 # command to build go application
 RUN go build -o /go-api

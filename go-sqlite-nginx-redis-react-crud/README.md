@@ -1,7 +1,7 @@
 ## Go - SQLite - Nginx - Redis - React Stack
 
 ```
-Back-end:       Go 2.12.3
+Back-end:       Go 1.22.3
 Database:       SQLite latest
 Caching:        Redis 7.2.5
 Reverse Proxy:  Nginx 1.26.0
@@ -14,3 +14,6 @@ Front-end:      React v18 (Next.js) - create-next-app@14.2.3
 
 ### Development
 > make dev
+
+### Terminate application
+> make down
