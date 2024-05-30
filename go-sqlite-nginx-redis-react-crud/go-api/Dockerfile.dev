@@ -7,7 +7,7 @@ RUN go install github.com/cosmtrek/air@latest
 # Set the working directory is /app inside docker container
 WORKDIR /app
 
-# Copy depencies config files to container's /app folder
+# Copy dependencies config files to container's /app folder
 COPY go.mod ./
 COPY go.sum ./
 # Run to install all required dependencies

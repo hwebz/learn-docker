@@ -16,6 +16,8 @@ Front-end:      React v18 (Next.js) - create-next-app@14.2.3
 > make logs
 ### Check logs for specific service
 > make logs service=<container_name>
+### URL
+> http://localhost:9001
 
 
 ## Development
@@ -27,3 +29,6 @@ Front-end:      React v18 (Next.js) - create-next-app@14.2.3
 
 ### Terminate application
 > make down
+
+### URL
+> http://localhost:9000

@@ -10,10 +10,10 @@ import (
 
 func init() {
 	// Initialize the database
-	// error := ConnectDB()
-	// if error != nil {
-	// 	log.Fatalf("Failed to connect to the database: %v", error)
-	// }
+	err := ConnectDB()
+	if err != nil {
+		log.Fatalf("Failed to connect to the database: %v", err)
+	}
 }
 
 func main() {
@@ -23,13 +23,18 @@ func main() {
 	// Create router
 	router := http.NewServeMux()
 
-	router.HandleFunc("GET /api/test", Test)
+	router.HandleFunc("GET /api/status", APIHealthCheck)
+	router.HandleFunc("PATCH /api/notes/{noteId}", UpdateNote)
+	router.HandleFunc("GET /api/notes/{noteId}", FindNoteById)
+	router.HandleFunc("DELETE /api/notes/{noteId}", DeleteNote)
+	router.HandleFunc("POST /api/notes", CreateNoteHandler)
+	router.HandleFunc("GET /api/notes", FindNotes)
 
 	// Custom CORS settings
 	corsConfig := cors.New(cors.Options{
-		AllowedHeaders: []string{"Origin", "Authorization", "Accept", "Content-Type"},
-		AllowedOrigins: []string{"http://localhost:3000"},
-		AllowedMethods: []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
+		AllowedHeaders:   []string{"Origin", "Authorization", "Accept", "Content-Type"},
+		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
 		AllowCredentials: true,
 	})
 
@@ -40,22 +45,25 @@ func main() {
 	corsHandler := corsConfig.Handler(loggedRouter)
 
 	server := http.Server{
-		Addr: port,
+		Addr:    port,
 		Handler: corsHandler,
 	}
 
 	log.Printf("Starting server on port %s", port)
-	if error := server.ListenAndServe(); error != nil {
-		log.Fatalf("Failed to start server: %v", error)
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
 	}
 }
 
-func Test(w http.ResponseWriter, r *http.Request) {
+func APIHealthCheck(w http.ResponseWriter, r *http.Request) {
 	response := map[string]string{
-		"status": "success",
+		"status":  "success",
 		"message": "Welcome to Go API",
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	err := json.NewEncoder(w).Encode(response)
+	if err != nil {
+		return
+	}
 }
