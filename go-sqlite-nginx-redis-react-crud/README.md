@@ -1,4 +1,4 @@
-## Go - SQLite - Nginx - Redis - React Stack
+# Go - SQLite - Nginx - Redis - React Stack
 
 ```
 Back-end:       Go 1.22.3
@@ -9,11 +9,21 @@ Front-end:      React v18 (Next.js) - create-next-app@14.2.3
 ```
 
 
-### Production
+## Production
+### Run application
 > make prod
+### Check logs for all containers
+> make logs
+### Check logs for specific service
+> make logs service=<container_name>
 
-### Development
+
+## Development
 > make dev
+### Check logs for all containers
+> make dev-logs
+### Check logs for specific service
+> make dev-logs service=<container_name>
 
 ### Terminate application
 > make down
