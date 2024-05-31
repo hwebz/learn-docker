@@ -41,3 +41,8 @@ export type UpdateNoteData = {
   content: string;
   published?: boolean;
 }
+
+export type DeleteNoteResponse = {
+  status: Status;
+  message: string;
+}

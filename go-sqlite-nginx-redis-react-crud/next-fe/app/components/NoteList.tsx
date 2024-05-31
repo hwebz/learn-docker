@@ -1,4 +1,6 @@
 import Link from "next/link";
+import DeleteNote from "./DeleteNote";
+import { useRouter } from "next/navigation";
 
 export default function NoteList({
   notes
@@ -48,14 +50,16 @@ export default function NoteList({
               <td className="px-6 py-4">
                   {note.updatedAt}
               </td>
-              <td className="px-6 py-4">
-                  <Link href={`/notes/add?id=${note.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+              <td className="px-6 py-4 flex items-center gap-4">
+                <Link href={`/notes/add?id=${note.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+                <DeleteNote
+                  note={note}
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-
   )
 }
