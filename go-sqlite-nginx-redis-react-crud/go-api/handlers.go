@@ -3,11 +3,12 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 func CreateNoteHandler(w http.ResponseWriter, r *http.Request) {
@@ -81,7 +82,7 @@ func FindNotes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if limit == "" {
-		limit = "1"
+		limit = "10"
 	}
 
 	intPage, err := strconv.Atoi(page)
@@ -110,6 +111,8 @@ func FindNotes(w http.ResponseWriter, r *http.Request) {
 		"status":  "success",
 		"results": len(notes),
 		"notes":   notes,
+		"page":    intPage,
+		"limit":   intLimit,
 	}
 	json.NewEncoder(w).Encode(response)
 }

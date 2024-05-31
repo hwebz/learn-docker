@@ -13,12 +13,14 @@ services:
     depends_on:
       - sqlite-db
       - redis
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
 
   sqlite-db:
     container_name: sqlite-db
     image: nouchka/sqlite3:latest
-    volumes:
-      - ./data:/data
     
   nginx:
     container_name: nginx
@@ -30,6 +32,8 @@ services:
     depends_on:
       - go-api
       - next-fe
+    networks:
+      - app-network
 
   redis:
     container_name: redis
@@ -40,9 +44,16 @@ services:
     build:
       context: ./next-fe
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+    env_file:
+      - ./next-fe/.env
     environment:
-      - API_HOST=http://go-api:8080
       - NODE_ENV=production
-      
+      - BACKEND_API_READY=false
+    depends_on:
+      - go-api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

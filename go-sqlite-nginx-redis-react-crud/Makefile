@@ -20,4 +20,4 @@ dev-logs:
 	docker-compose -f docker-compose.dev.yml logs -f $(service)
 
 down:
-	docker-compose down --volumes --rmi local
+	docker-compose -f docker-compose.dev.yml -f docker-compose.yml down --volumes --rmi local

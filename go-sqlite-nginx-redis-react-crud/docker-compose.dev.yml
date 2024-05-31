@@ -6,8 +6,6 @@ services:
     build:
       context: ./go-api
       dockerfile: Dockerfile.dev
-    ports:
-      - "8080:8080"
     volumes:
       - ./go-api:/app
     environment:
@@ -16,6 +14,8 @@ services:
     depends_on:
       - sqlite-db
       - redis
+    networks:
+      - app-network
 
   sqlite-db:
     container_name: sqlite-db
@@ -33,6 +33,8 @@ services:
     depends_on:
       - go-api
       - next-fe
+    networks:
+      - app-network
 
   redis:
     container_name: redis
@@ -45,6 +47,11 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./next-fe:/app
-    environment:
-      - API_HOST=http://go-api:8080
+    env_file:
+      - ./next-fe/.env.development
+    networks:
+      - app-network
       
+networks:
+  app-network:
+    driver: bridge

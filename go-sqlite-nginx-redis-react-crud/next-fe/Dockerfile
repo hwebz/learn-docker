@@ -10,19 +10,22 @@ RUN npm install
 
 COPY . .
 
-# Build the Next.js Static Site Generation (SSG) rendering mode
-RUN npm run build
+# Grant execute permissions to the script
+RUN chmod +x rebuild.sh
 
-# Stage 2: Serve the static files with Nginx
-FROM nginx:1.26.0
-# For React.js production build
-# COPY --from=0 /app/build /usr/share/nginx/html
+# Command to execute after the container starts
+CMD ["./rebuild.sh"]
 
-# For Next.js production build
-COPY --from=builder /app/out /usr/share/nginx/html
+# Aproach
+# FROM nginx:1.26.0
+# # For React.js production build
+# # COPY --from=0 /app/build /usr/share/nginx/html
 
-# Copy custom Nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+# # For Next.js production build
+# COPY --from=builder /app/out /usr/share/nginx/html
 
-# Start nginx server inside next-fe container
-CMD ["nginx", "-g", "daemon off;"]
+# # Copy custom Nginx configuration
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+# # Start nginx server inside next-fe container
+# CMD ["nginx", "-g", "daemon off;"]
