@@ -10,3 +10,6 @@ This repository is to learn Docker, Docker Compose, Docker Swarm, .. to build fu
 5. Database
 6. Others (Micro-services, ...)
 ```
+
+### Go - SQLite - Nginx - Redis - React
+<a href="/go-sqlite-nginx-redis-react-crud/README.md">View details</a>
