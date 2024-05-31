@@ -48,7 +48,6 @@ services:
       - ./next-fe/.env
     environment:
       - NODE_ENV=production
-      - BACKEND_API_READY=false
     depends_on:
       - go-api
     networks:
